@@ -68,12 +68,12 @@ def process_tickets(ticket_ids: list, success=None, failures=None, max_size=None
         except TypeError as e:
             # Invalid ticket type - record it as a (ticket_id, error message) pair instead of raising.
             failures.append((ticket_id, f"{e}"))
-            logging.warning("Ticket %s failed: %s", ticket_id, e)
+            logging.warning(f"Ticket {ticket_id} failed: {e}")
         except TicketQueueFull as e:
-            logging.error("Ticket %s failed: queue full (max_size=%s)", ticket_id, e.max_size)
+            logging.error(f"Ticket {ticket_id} failed: queue full (max_size={e.max_size})")
             break
 
-    logging.info("done: %s shipped, %s failed", len(success), len(failures))
+    logging.info(f"done: {len(success)} shipped, {len(failures)} failed")
 
     return success, failures
 
